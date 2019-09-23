@@ -291,3 +291,24 @@ Promise.race([getData(false,'失败咯'),getData(false,'2 也失败咯')]).then(
 })
 ```
 上述代码块，谁的状态发生改变，就执行相应的回调函数，比如，先触发了成功的回调，那么就会执行then()中的成功的回调函数，先触发了失败的回调，那么就会执行then()中的失败的回调函数，val或者reason的值为相应的返回值
+
+# promise化
+```javascript
+// 传入一个 异步函数，对其进行promise化
+function promisefy(func){
+    return function(...arg){
+        return new Promise((res,rej)=>{
+            func(...arg,(err,data)=>{
+                if(data){
+                    res(data)
+                }else{
+                    rej(err);
+                }
+            })
+        })
+    }
+}
+// 使用
+let func = promisefy(ajax);
+func( paramse ).then(()=>{},()=>{})
+```

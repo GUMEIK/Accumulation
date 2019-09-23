@@ -24,19 +24,35 @@
 //     throw new Error('error')
 // })
 
-function getData(bool,tips){
-    return new Promise((res,rej)=>{
-        if(bool){
-            res(tips);
-        }else{
-            rej(tips);
-        }
-    })
+// function getData(bool,tips){
+//     return new Promise((res,rej)=>{
+//         if(bool){
+//             res(tips);
+//         }else{
+//             rej(tips);
+//         }
+//     })
+// }
+// Promise.race([getData(false,'失败咯'),getData(false,'2 也失败咯')]).then((val)=>{
+//     console.log('success')
+//     console.log(val)
+// },(reason)=>{
+//     console.log('fail')
+//     console.log(reason)
+// })
+
+
+// 传入一个 异步函数，对其进行promise化
+function promise(func){
+    return function(...arg){
+        return new Promise((res,rej)=>{
+            func(...arg,(err,data)=>{
+                if(data){
+                    res(data)
+                }else{
+                    rej(err);
+                }
+            })
+        })
+    }
 }
-Promise.race([getData(false,'失败咯'),getData(false,'2 也失败咯')]).then((val)=>{
-    console.log('success')
-    console.log(val)
-},(reason)=>{
-    console.log('fail')
-    console.log(reason)
-})
