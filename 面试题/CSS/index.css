@@ -1,0 +1,24 @@
+@import url(./test.css);
+
+p{
+    width:100px;
+    height:100px;
+    /* background-color: aquamarine; */
+    border:1px solid black;
+    
+
+    line-height: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+div{
+    width:100px;
+    height:100px;
+    /* background-color: aquamarine; */
+    border:1px solid black;
+    /* display: none;     */
+    /* opacity: 0; */
+    visibility: hidden;
+}
