@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" >
+        <span  >{{ money }}</span>
+    </div>
+    <script>   
+        Vue.filter('toMoney',function(value,num,type){
+            let temp = value * num + type;
+            return temp;
+        })     
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                money:1000000
+            },
+        
+        })
+    </script>
+</body>
+</html>
