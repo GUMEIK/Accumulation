@@ -37,4 +37,54 @@ js中的创建数组尽量给一个数组的长度
 var arr = new Array(10);
 如果内容不是固定的，一般用这种方式来定义一个数组
 
-## 链表(优缺点和数组互)
+## 链表(优缺点和数组互补)
+
+### 链表遍历
+
+### 链表逆置(递归)
+这里的链表不做特殊说明的话就是指单链表，这里采用递归的方法对单链表进行逆置。
+
+```javascript
+function Node(value){
+    this.value = value;
+    this.next = null;
+}
+
+var node1 = new Node(1);
+var node2 = new Node(2);
+var node3 = new Node(3);
+var node4 = new Node(4);
+var node5 = new Node(5);
+
+node1.next = node2;
+node2.next = node3;
+node3.next = node4;
+node4.next = node5;
+
+
+function listReverse(root){
+    if(root.next.next == null){
+        root.next.next = root;
+        return root.next;
+    }else{
+        var result = listReverse(root.next);
+        root.next.next = root;
+        root.next = null;
+        return result;
+    }
+}
+
+var newNode = listReverse(node1)
+
+function each(root){
+    if(root.next == null){
+        console.log(root.value)
+        return;
+    }
+    console.log(root.value);
+    each(root.next)
+}
+each(newNode)
+```
+
+
