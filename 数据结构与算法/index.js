@@ -83,5 +83,125 @@
 // }
 
 
+// function Node (value){
+//     this.value = value;
+//     this.left = null;
+//     this.right = null;
+// }
+// /**
+//  * 
+//  * ACFGBDE
+//  * FCGADBE
+//  */
+// var qianList = ['a','c','f','g','b','d','e'];
+// var zhongList = ['f','c','g','a','d','b','e'];
+
+// function demo(qian,zhong){
+//     if(qian == null || zhong == null || qian.length == 0 || zhong.length == 0 || qian.length != zhong.length) return;
+//     // 找到根节点
+//     var root = new Node(qian[0]);
+//     // 区分左右子树
+//     var index = zhong.indexOf(root.value);
+//     var qianLeft = qian.slice(1,1 + index);
+//     var qianRight = qian.slice(1+ index,qian.length);
+//     var zhongLeft = zhong.slice(0,index);
+//     var zhongRight = zhong.slice(index + 1,zhong.length);
+//     root.left = demo(qianLeft,zhongLeft);
+//     root.right = demo(qianRight,zhongRight);
+//     return root;
+// }
+
+// var root = demo(qianList,zhongList);
+// console.log(root.left);
+// console.log(root.right)
+
+// 默认传左闭右开区间
+// function quickSort2(arr,start,end){
+//     if(start >= end - 1 ) return;
+//     var left = start;
+//     var right = end ;
+//     do{
+//         // 执行到left 位 比begin 位大了，停止
+//         do left ++;while(left < right && arr[left] < arr[start]);
+//         do right --;while(left < right && arr[right] > arr[start]);
+//         if(left < right) {
+//             // 交换位子
+//             var temp = arr[left];
+//             arr[left] = arr[right];
+//             arr[right] = temp;
+//         }
+//     }while(left < right)
+//     // 如果左边和右边相等就是right - 1
+//     // 否则就是right
+//     var swapPoint = left == right ? right - 1 :right;
+//     var temp1 = arr[swapPoint];
+//     arr[swapPoint] = arr[start];
+//     arr[start] = temp1;
+//     quickSort2(arr,start,swapPoint);
+//     quickSort2(arr,swapPoint + 1,end)
+// }
+
+// function quickSort(arr){
+//     quickSort2(arr,0,arr.length)
+// }
+
+// var arr = [4,5,2,3,9,6,7,3]
+// quickSort(arr);
+// console.log(arr)
+
+/**
+ * [4,5,2,9,6,7,3,5]
+ * 
+ */
 
 
+ function Node(value){
+    this.value = value;
+    this.left = null;
+    this.right = null;
+ }
+
+ var a1 = new Node('a');
+ var b1 = new Node('b');
+ var c1 = new Node('c');
+ var d1 = new Node('d');
+ var e1 = new Node('e');
+ var f1 = new Node('f');
+ var g1 = new Node('g');
+
+ a1.left = c1;
+ a1.right = b2;
+
+ c1.left = f1;
+ c1.right = g1;
+
+ b1.left = d1;
+ b1.right = e1;
+
+ var a2 = new Node('a');
+ var b2 = new Node('b');
+ var c2 = new Node('c');
+ var d2 = new Node('d');
+ var e2 = new Node('e');
+ var f2 = new Node('f');
+ var g2 = new Node('g');
+
+ a2.left = c2;
+ a2.right = b2;
+
+ c2.left = f2;
+ c2.right = g2;
+
+ b2.left = d2;
+ b2.right = e2;
+
+ function compareTree(root1,root2){
+    if(root1 == root2) return true;//是同一棵树
+    if(root1 == null && root2 != null || root1 != null && root2 == null) return false;
+    if(root1.value != root2.value) return false;//相同位置的值不相等
+    var leftBool = compareTree(root1.left,root2.left);
+    var rightBool = compareTree(root2.left,root2.right);
+    return leftBool && rightBool;
+ }
+
+ console.log(compareTree(a1,a2))
