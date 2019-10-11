@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,23 +8,39 @@
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
+
 <body>
     <div id="app">
-        <input type="text" >
-        <span  >{{ money }}</span>
+        <!-- hello啊，树哥！ -->
+        <hello-world></hello-world>
     </div>
-    <script>   
-        Vue.filter('toMoney',function(value,num,type){
-            let temp = value * num + type;
-            return temp;
-        })     
+    <script>
+        Vue.component('hello-world', {
+            template: '<h1>{{ content }}</h1>',
+            data() {
+                return {
+                    content: 'hello 啊 ，组件'
+                }
+            }
+        })
+
         const vm = new Vue({
-            el:'#app',
-            data:{
-                money:1000000
+            el: '#app',
+            data: {
+                money: 1000000
             },
-        
+            components: {
+                helloWorld: {
+                    template: '<h1>{{ content }}</h1>',
+                    data() {
+                        return {
+                            content: 'hello 啊 ，组件'
+                        }
+                    }
+                }
+            }
         })
     </script>
 </body>
+
 </html>
