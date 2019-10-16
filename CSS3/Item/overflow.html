@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width:100px;
+            height: 200px;
+            border:1px solid black;
+            overflow-x: scroll;
+            overflow-y: hidden;
+        }
+        .content{
+            width:150px;
+            height: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+            <div class="content">
+                    这个选项包含剪切，显示滚动条，或者显示 从容器溢出到周围区域的内容。
+
+                    指定除visible(默认值)以外的值将创建一个新的 块级格式化上下文. 这在技术层面上是必须的——如果一个浮动元素和滚动条相交，它会在每个滚动步骤后强行重新包装内容，从而导致慢滚动体验。
+                    
+                    为使 overflow 有效果，块级容器必须有一个指定的高度（height或者max-height）或者将white-space设置为nowrap。
+                    
+                    注意:  设置一个轴为visible（默认值），同时设置另一个轴为不同的值，会导致设置visible的轴的行为会变成auto。 
+                    
+                    注意: 即使将overflow设置为hidden，也可以使用JavaScript Element.scrollTop 属性来滚动HTML元素。
+                    语法
+            </div>
+    </div>
+</body>
+</html>
