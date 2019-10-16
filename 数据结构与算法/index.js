@@ -170,7 +170,7 @@
  var g1 = new Node('g');
 
  a1.left = c1;
- a1.right = b2;
+ a1.right = b1;
 
  c1.left = f1;
  c1.right = g1;
@@ -200,7 +200,7 @@
     if(root1 == null && root2 != null || root1 != null && root2 == null) return false;
     if(root1.value != root2.value) return false;//相同位置的值不相等
     var leftBool = compareTree(root1.left,root2.left);
-    var rightBool = compareTree(root2.left,root2.right);
+    var rightBool = compareTree(root1.right,root2.right);
     return leftBool && rightBool;
  }
 
