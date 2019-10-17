@@ -107,24 +107,14 @@ function VNode(
 function constructVNode(root){
     let vnode = null;
     let children = [];
-    // 看节点是否含有文本，只有文本节点才会含有文本
     let text = getNodeText(root);
     let data = null;
     let nodeType = root.nodeType;
     let tag = root.nodeName;
     vnode = new VNode(tag,root,children,text,data,parent,nodeType);
     let childs = vnode.elm.childNodes;
-    //     let childs = root.childNodes;
-    // 对每一个子节点再次进行dom数的构建
-    // 深度优先搜索
     for(let i = 0;i < childs.length;i++){
-        // 获取子节点的虚拟dom树
         let childNodes = constructVNode(childs[i]);
-        // 将子节点的虚拟dom树放进父节点的虚拟dom树的children属性里面
-        // 构建的虚拟dom树可能是单一节点，也有可能返回节点数组
-        // 如果childNodes是一个单一元素的话，那么childNodes就是VNode构建出来的
-        // 如果childNodes是一个数组，那么构建出来它的应该是Array
-        // 当然，也可以换成其他的方式进行判断
         if(childNodes instanceof VNode){
             vnode.children.push(childNodes);
         }else{
@@ -133,7 +123,7 @@ function constructVNode(root){
     }
     return vnode;
 }
-// 看该节点是否含有文本
+
 function getNodeText(node){
     if(node.nodeType == 3){
         return node.nodeValue;
@@ -142,3 +132,77 @@ function getNodeText(node){
     }
 }
 let app = document.getElementById('app');
+// 得到虚拟节点
+let vnode = constructVNode(app);
+
+// 建立映射关系
+// 通过模板找节点(通过模板查找哪些节点用到了这个模板)
+let template2Vnode = new Map();
+// 通过节点找模板(通过这个节点查看节点下有哪些节点)
+let vnode2template = new Map();
+
+
+// 进行预备渲染
+function prepareRender(vnode){
+    if(vnode == null) return;
+    if(vnode.nodeType == 3){//文本节点
+        // 分析模板字符串
+        // 如果没有匹配到符合要求的字符串，templateSrtList值为null
+        // 如果匹配成功，则返回数组，即便只有一个值
+        let templateSrtList = vnode.text.match(/{{[a-zA-Z0-9_.]+}}/g);
+        if(templateSrtList){
+            for(let i = 0;i < templateSrtList.length;i++){
+                // 看有哪些节点使用了这个模板
+                setTemplate2Vnode(templateSrtList[i],vnode);
+                // 看这个节点有哪些模板
+                setVnode2Template(templateSrtList[i],vnode);
+            }
+        }
+    }
+    if(vnode.nodeType == 1){//标签节点
+        // 看其子节点是否是文本节点
+        for(let i = 0;i < vnode.children.length;i++){
+            prepareRender(vnode.children[i]);
+        }
+    }
+}
+prepareRender(vnode);
+
+// 通过模板设置有哪些节点用到了这个模板
+function setTemplate2Vnode(template,vnode){
+    // template 是通过vnode.text 属性获取到的
+    // template 就是获取到的所有的文本节点可能是模板的
+    // 每个模板都对应一个文本节点
+    // setTemplate2Vnode在上面会被循环调用
+    // 通过map映射，将节点和模板对应起来
+    let templateName = getTemplateName(template);
+    let vnodeSet = template2Vnode.get(templateName);
+    if(vnodeSet){
+        vnodeSet.push(vnode);
+    }else{
+        template2Vnode.set(templateName,[vnode]);
+    }
+    // template2Vnode的值 
+    // Map(2) {"content" => Array(2), "description" => Array(1)}
+    // 意思就是content这个模板，被两个节点进行使用
+    // description这个模板，被一个节点进行使用
+}
+// 通过节点查看，这个节点有哪些模板
+function setVnode2Template(template,vnode){
+    let templateSet = vnode2template.get(vnode);
+    if(templateSet){
+        templateSet.push(template);
+    }else{
+        vnode2template.set(vnode,[getTemplateName(template)]);
+    }
+}
+
+
+// 获取模板名字
+function getTemplateName(template){
+    if(template.substring(0,2)=="{{" && template.substring(template.length - 2,template.length) == '}}'){
+        return template.substring(2,template.length - 2);
+    }else{
+        return template;
+    }
+}
