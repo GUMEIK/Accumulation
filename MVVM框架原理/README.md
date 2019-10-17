@@ -280,7 +280,7 @@ function setTemplate2Vnode(template,vnode){
 function setVnode2Template(template,vnode){
     let templateSet = vnode2template.get(vnode);
     if(templateSet){
-        templateSet.push(template);
+        templateSet.push(getTemplateName(template));
     }else{
         vnode2template.set(vnode,[getTemplateName(template)]);
     }
@@ -295,4 +295,41 @@ function getTemplateName(template){
         return template;
     }
 }
+```
+## 进行文本节点渲染
+```
+为了方便调试，在构建虚拟dom的时候(constructVNode构造函数里面)，手动给vnode.data赋值:
+
+let data = {
+    content: 'hello啊，树哥！',
+    description: 'GUMEI牛逼！'
+}
+```
+```javascript
+// 渲染
+function renderNode(vnode) {
+    // 渲染文本节点
+    if (vnode.nodeType == 3) {
+        // 把当前节点下的模板取出来
+        let templates = vnode2template.get(vnode);
+        if (templates) {
+            // vnode上的text的值我们是不改变的
+            let result = vnode.text;
+            for (let i = 0; i < templates.length; i++) {
+                let templateValue = vnode.data[templates[i]];
+                if(templateValue){
+                    // 替换文本节点的内容
+                    result = result.replace('{{'+ templates[i] +'}}',templateValue);
+                }
+            }
+            // 将替换后的文本重新赋值到元素身上
+            vnode.elm.nodeValue = result;
+        }
+    } else {
+        for (let i = 0; i < vnode.children.length; i++) {
+            renderNode(vnode.children[i]);
+        }
+    }
+}
+renderNode(vnode)
 ```
