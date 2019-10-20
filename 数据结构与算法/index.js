@@ -155,53 +155,166 @@
  */
 
 
- function Node(value){
-    this.value = value;
-    this.left = null;
-    this.right = null;
- }
+//  function Node(value){
+//     this.value = value;
+//     this.left = null;
+//     this.right = null;
+//  }
 
- var a1 = new Node('a');
- var b1 = new Node('b');
- var c1 = new Node('c');
- var d1 = new Node('d');
- var e1 = new Node('e');
- var f1 = new Node('f');
- var g1 = new Node('g');
+//  var a1 = new Node('a');
+//  var b1 = new Node('b');
+//  var c1 = new Node('c');
+//  var d1 = new Node('d');
+//  var e1 = new Node('e');
+//  var f1 = new Node('f');
+//  var g1 = new Node('g');
 
- a1.left = c1;
- a1.right = b1;
+//  a1.left = c1;
+//  a1.right = b1;
 
- c1.left = f1;
- c1.right = g1;
+//  c1.left = f1;
+//  c1.right = g1;
 
- b1.left = d1;
- b1.right = e1;
+//  b1.left = d1;
+//  b1.right = e1;
 
- var a2 = new Node('a');
- var b2 = new Node('b');
- var c2 = new Node('c');
- var d2 = new Node('d');
- var e2 = new Node('e');
- var f2 = new Node('f');
- var g2 = new Node('g');
+//  var a2 = new Node('a');
+//  var b2 = new Node('b');
+//  var c2 = new Node('c');
+//  var d2 = new Node('d');
+//  var e2 = new Node('e');
+//  var f2 = new Node('f');
+//  var g2 = new Node('g');
 
- a2.left = c2;
- a2.right = b2;
+//  a2.left = c2;
+//  a2.right = b2;
 
- c2.left = f2;
- c2.right = g2;
+//  c2.left = f2;
+//  c2.right = g2;
 
- b2.left = d2;
- b2.right = e2;
+//  b2.left = d2;
+//  b2.right = e2;
 
- function compareTree(root1,root2){
-    if(root1 == root2) return true;//是同一棵树
-    if(root1 == null && root2 != null || root1 != null && root2 == null) return false;
-    if(root1.value != root2.value) return false;//相同位置的值不相等
-    var leftBool = compareTree(root1.left,root2.left);
-    var rightBool = compareTree(root1.right,root2.right);
-    return leftBool && rightBool;
- }
+//  function compareTree(root1,root2){
+//     if(root1 == root2) return true;//是同一棵树
+//     if(root1 == null && root2 != null || root1 != null && root2 == null) return false;
+//     if(root1.value != root2.value) return false;//相同位置的值不相等
+//     var leftBool = compareTree(root1.left,root2.left);
+//     var rightBool = compareTree(root1.right,root2.right);
+//     return leftBool && rightBool;
+//  }
 
- console.log(compareTree(a1,a2))
+//  console.log(compareTree(a1,a2))
+
+
+// function Node(value){
+//    this.value = value;
+//    this.left = null;
+//    this.right = null
+// }
+
+// function addNode(root,num){
+//    if(root == null) return;
+//    // 代表是重复的树
+//    // if(root.value == num) return;
+//    if(root.value < num){//目标值比当前节点大
+//       if(root.right == null){
+//          // 如果右侧为空，则创建节点
+//          // 如果右侧不为空，则向右递归
+//          root.right = new Node(num)
+//       }else{
+//          addNode(root.right,num)
+//       }
+//    }else{//目标值比当前节点小
+//       if(root.left == null){
+//          root.left = new Node(num)
+//       }else{
+//          addNode(root.left,num)
+//       }
+//    }
+// }
+
+function buildSearch(arr){
+   if(arr == null || arr.length ==0 ) return null;
+   let root = new Node(arr[0]);
+   for(let i = 1;i<arr.length;i++){
+      addNode(root,arr[i])
+   }
+   return root;
+}
+
+
+// let arr = []
+// for(let i = 0;i < 10000;i++){
+//    arr[i] = Math.random()*10000;
+// }
+// let num1 = 0;
+// function search(arr,target){
+//    for(let i = 0;i< arr.length;i++){
+//       num1++
+//       if(arr[i] == target){
+//          return true;
+//       }
+//    }
+//    return false;
+// }
+// console.log(search(arr,1000))
+
+// let root = buildSearch(arr)
+// let num2 = 0;
+// function searchByTree(root,target){
+//    num2++;
+//    if(root == null) return false;
+//    if(root.value == target) return true;
+//    if(root.value > target) return searchByTree(root.left,target);
+//    else return searchByTree(root.right,target)
+// }
+// console.log(num1)
+// console.log(searchByTree(root,1000))
+// console.log(num2)
+
+
+function Node(value){
+   this.value = value;
+   this.left = null;
+   this.right = null;
+}
+function addNode(root,num){
+   if(root == null || root.length == 0) return;
+   if(num > root.value){
+      if(root.right == null){
+         root.right = new Node(num);
+      }else{
+         addNode(root.right,num)
+      }
+   }else{
+      if(root.left == null){
+         root.left = new Node(num);
+      }else{
+         addNode(root.left,num)
+      }
+   }
+}
+function buildSearchTree(arr){
+   if(arr == null || arr.length == 0) return null;
+   let root = new Node(arr[0]);
+   for(let i = 1;i < arr.length;i++){
+      // 对数组的每项进行遍历，然后建立起树结构
+      addNode(root,arr[i])
+   }
+   return root;
+}
+
+function searchByTree(root,target){
+   if(root == null) return false;
+   if(root.value == target) return true;
+   if(target > root.value){
+      return searchByTree(root.right,target)
+   }else{
+      return searchByTree(root.left,target);
+   }
+}
+
+let arr = [12,3,4,7,9,4,4]
+let root = buildSearchTree(arr);
+console.log(searchByTree(root,11))
