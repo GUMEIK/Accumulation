@@ -116,6 +116,7 @@ function constructVNode(root) {
         content: 'hello啊，树哥！',
         description: 'GUMEI牛逼！'
     }
+    data = proxyObject(data)
     vnode = new VNode(tag, root, children, text, data, parent, nodeType);
     let childs = vnode.elm.childNodes;
     for (let i = 0; i < childs.length; i++) {
@@ -223,9 +224,9 @@ function renderNode(vnode) {
             let result = vnode.text;
             for (let i = 0; i < templates.length; i++) {
                 let templateValue = vnode.data[templates[i]];
-                if(templateValue){
+                if (templateValue) {
                     // 替换文本节点的内容
-                    result = result.replace('{{'+ templates[i] +'}}',templateValue);
+                    result = result.replace('{{' + templates[i] + '}}', templateValue);
                 }
             }
             // 将替换后的文本重新赋值到元素身上
@@ -237,4 +238,59 @@ function renderNode(vnode) {
         }
     }
 }
+
 renderNode(vnode)
+
+function proxyObject(obj) {
+    let proxyObj = {};
+    for (let prop in obj) {
+        Object.defineProperty(proxyObj, prop, {
+            configurable: true,
+            get() {
+                return obj[prop];
+            },
+            set(value) {
+                console.log('在此处，进行一系列操作')
+
+                obj[prop] = value;
+                renderData(prop)
+            }
+        })
+        // 如果obj[prop] 仍然为一个对象，就继续进行代理
+        if (obj[prop] instanceof Object) {
+            proxyObj[prop] = proxyObject(obj[prop])
+        }
+    }
+    return proxyObj;
+}
+
+// 当属性发生改变时自动刷新页面
+// 当代理的数据发生改变时，获取数据都用到了哪些模板，进行渲染
+
+function renderData(data) {
+    let vnodes = template2Vnode.get(data);
+
+    if (vnodes != null) {
+        // console.log(vnode)
+        for (let i = 0; i < vnodes.length; i++) {
+            console.log(vnodes[i])
+            renderNode(vnodes[i])
+        }
+    }
+}
+
+
+let input = document.getElementById('input')
+
+function vmodal(elm, data) {
+    if (elm.nodeType == 1) {
+        elm.onchange = function (e) {
+            let attrNames = elm.getAttributeNames();
+            if (attrNames.indexOf('v-modal') > -1) {
+                let attrVauleText = elm.getAttribute('v-modal');
+                data[attrVauleText] = elm.value;
+            }
+        }
+    }
+}
+vmodal(input, vm)

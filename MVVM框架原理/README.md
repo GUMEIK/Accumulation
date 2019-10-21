@@ -333,3 +333,10 @@ function renderNode(vnode) {
 }
 renderNode(vnode)
 ```
+## 修改属性自动进行渲染
+```
+就是在代理对象的时候，进行renderNode操作就ok了，由于目前不方便操作，所以此部分放到最后面来说明
+```
+# 属性
+## v-modal
+

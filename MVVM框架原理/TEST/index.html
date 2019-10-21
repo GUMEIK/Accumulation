@@ -5,6 +5,7 @@
     <title>TEST</title>
 </head>
 <body>
+    <input id="input" v-modal="testData"></input>
 <div id="app">
     你好啊，{{content}} <br>
     <hr>
@@ -14,6 +15,14 @@
         <hr>
     <div class="demo">demo</div>
 </div>
+<script>
+        let vm = {
+            content: 'hello啊，树哥！',
+            description: 'GUMEI牛逼！'
+        }
+        let testData = '你好！'
+    </script>
 <script src="index.js"></script>
+
 </body>
 </html>
