@@ -64,11 +64,18 @@ node4.next = node5;
 
 function listReverse(root){
     if(root.next.next == null){
+        // 如果当前节点是倒数第二个节点
+        // 就将倒数第一个节点的指针指向当前节点
         root.next.next = root;
+        // 返回下一个节点(此时最后一个节点已经成为了根节点，这也是最终要返回的结果)
         return root.next;
     }else{
+        // 如果当前节点不是倒数第二个节点
+        // 就继续查看下一个节点
         var result = listReverse(root.next);
+        // 让下一个节点指向当前节点
         root.next.next = root;
+        // 让当前节点的指针指向空
         root.next = null;
         return result;
     }
@@ -77,11 +84,15 @@ function listReverse(root){
 var newNode = listReverse(node1)
 
 function each(root){
+    // 如果当前节点是最后一个节点
+    // 输出当前节点,并返回
     if(root.next == null){
         console.log(root.value)
         return;
     }
+    // 如果不是最后一个节点,输出当前节点
     console.log(root.value);
+    // 递归
     each(root.next)
 }
 each(newNode)
