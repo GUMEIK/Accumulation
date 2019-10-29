@@ -33,5 +33,4 @@ import aDefault from './a.js'
 ![](./img/es6module.png)
 
 上图中的module
-
 ![](./img/module.png)
