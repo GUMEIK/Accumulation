@@ -1,0 +1,54 @@
+# 广度遍历
+```js
+function wideSearch(root) {
+    let coll = [];
+    function temp(rootList){
+        if(rootList == null || rootList.length == 0) return;
+        let childList = [];
+        for(let i = 0;i < rootList.length;i++){
+            coll.push(rootList[i].value)
+            if(rootList[i].left) childList.push(rootList[i].left);
+            if(rootList[i].right) childList.push(rootList[i].right);
+        }
+        if(childList.length !== 0 && childList) temp(childList)
+    }
+    temp(root);
+    return coll;
+}
+```
+# 深度遍历(其实就是前序遍历)
+# 之字形打印二叉树
+```js
+
+function wideSearch(root) {
+    let coll = root || [];
+    let times = 0;
+    function temp(rootList){
+        if(rootList == null || rootList.length == 0) return;
+        let childList = [];
+        for(let i = 0;i < rootList.length;i++){
+            // coll.push(rootList[i].value)
+            if(rootList[i].left) childList.push(rootList[i].left);
+            if(rootList[i].right) childList.push(rootList[i].right);
+        }
+        times ++;
+        //之字形打印二叉树
+        if(times % 2 === 0){
+            coll = coll.concat(childList.reverse())
+        }else {
+            coll = coll.concat(childList)
+        }
+        if(childList.length !== 0 && childList) temp(childList);
+    }
+    temp(root);
+    return coll;
+}
+function dealResult(nodeList){
+    let arr = [];
+    for(let i = 0,len = nodeList.length;i < len;i++){
+        arr[i] = nodeList[i].value;
+    }
+    return arr;
+}
+console.log( dealResult(wideSearch([a])))
+```
