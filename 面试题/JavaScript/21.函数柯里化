@@ -26,5 +26,5 @@ function multipy(a,b,c,d) {
     return a*b*c*d;
 }
 let curryMultipy = curry(multipy);
-console.log(curryMultipy(2)(3)(4)(5))
+console.log(curryMultipy(2)(3)(4)(5))````
 ```

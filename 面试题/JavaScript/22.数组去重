@@ -1,0 +1,21 @@
+# 利用对象特性去重
+```js
+function unique(arr){
+    let obj = {}
+    let newArr = [];
+    for(let i = 0;i< arr.length;i++){
+        if(obj[arr[i]] == undefined){
+            newArr.push(arr[i]);
+            obj[arr[i]] = 1;
+        }
+    }
+    return newArr;
+}
+```
+# 利用Set特点去重
+```js
+function unique(arr){
+    let setArr = new Set(arr);
+    return [...setArr];
+}
+```
