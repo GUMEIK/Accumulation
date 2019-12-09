@@ -1,0 +1,30 @@
+# 题目
+如何实现multipy(2)(3)(4)(5)，结果为2 * 3 * 4 * 5= 120；
+# 函数柯里化
+## 柯里化实现代码
+```js
+function curry(handle) {
+    //获取除函数以外的传进来的参数
+    let args = [].slice.call(arguments,1);
+    return function () {
+        //获取传进函数的总参数
+        let totalParams = args.concat(Array.from(arguments));
+        //当参数凑够的时候，执行传进来的函数
+        if(handle.length == totalParams.length)  return handle.apply(this,totalParams);
+        else {
+            //如果参数没有凑够时，递归调用curry
+            totalParams.unshift(handle);
+            return curry.apply(this,totalParams);
+        }
+    }
+}
+
+```
+## 柯里化应用
+```js
+function multipy(a,b,c,d) {
+    return a*b*c*d;
+}
+let curryMultipy = curry(multipy);
+console.log(curryMultipy(2)(3)(4)(5))
+```
