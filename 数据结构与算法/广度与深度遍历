@@ -52,3 +52,19 @@ function dealResult(nodeList){
 }
 console.log( dealResult(wideSearch([a])))
 ```
+```js
+// 上面之字形二叉树是单个的打印出来的，也可以按照数组的方法打印出来比如：
+// ['a',['c','b'],['e','d','g','f']]
+// 只需要改变返回结果的处理方法就行了
+//提取数组中一定属性的数据。比如：提取下面数组中的 value或者age
+//[{value:1,age:12},{value:3,age:53},{value:8,age:9}]
+function pureArr(nodeArr,value) {
+    return nodeArr.map(function (ele,index,self) {
+        if(ele.constructor != Array){
+            return ele[value];
+        }else {
+            return pureArr(ele,value);
+        }
+    })
+}
+```

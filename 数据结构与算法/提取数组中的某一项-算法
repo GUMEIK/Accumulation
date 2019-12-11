@@ -1,0 +1,13 @@
+```js
+//提取数组中一定属性的数据。比如：提取下面数组中的 value或者age
+//[{value:1,age:12},{value:3,age:53},{value:8,age:9}]
+function pureArr(nodeArr,value) {
+    return nodeArr.map(function (ele,index,self) {
+        if(ele.constructor != Array){
+            return ele.value;
+        }else {
+            return pureArr(ele);
+        }
+    })
+}
+```
